@@ -32,6 +32,9 @@ class LikeDao {
                 .populate("likedBy")
                 .exec();
         });
+        this.findUserLikesTuit = (uid, tid) => __awaiter(this, void 0, void 0, function* () {
+            return LikeModel_1.default.findOne({ tuit: tid, likedBy: uid });
+        });
         /**
          * Uses LikeDao to retrieve all tuit documents from tuits collection that are liked by a User
          * @param {string} uid User's primary key
@@ -49,7 +52,7 @@ class LikeDao {
             })
                 .exec();
         });
-        this.countHowManyLikedTuit = (tid) => __awaiter(this, void 0, void 0, function* () { return LikeModel_1.default.count({ tuit: tid }); });
+        this.countHowManyLikedTuit = (tid) => __awaiter(this, void 0, void 0, function* () { return LikeModel_1.default.countDocuments({ tuit: tid }); });
         /**
          * Uses LikeDao to insert like instance into the database
          * @param {string} uid User's primary key

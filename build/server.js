@@ -13,13 +13,14 @@ const FollowController_1 = __importDefault(require("./controllers/FollowControll
 const BookmarkController_1 = __importDefault(require("./controllers/BookmarkController"));
 const MessageController_1 = __importDefault(require("./controllers/MessageController"));
 const AuthController_1 = __importDefault(require("./controllers/AuthController"));
+const DislikeController_1 = __importDefault(require("./controllers/DislikeController"));
 const express_1 = __importDefault(require("express"));
 const mongoose = require('mongoose');
 const session = require("express-session");
 const cors = require('cors');
 const app = (0, express_1.default)();
 const corsOptions = {
-    origin: 'http://localhost:4005',
+    origin: true,
     credentials: true,
     optionSuccessStatus: 200
 };
@@ -56,6 +57,7 @@ const likesController = LikeController_1.default.getLikeController(app);
 const followController = FollowController_1.default.getFollowController(app);
 const bookmarkController = BookmarkController_1.default.getBookmarkController(app);
 const messageController = MessageController_1.default.getMessageController(app);
+const dislikesController = DislikeController_1.default.getInstance(app);
 /**
  * Start a server listening at port 4000 locally
  * but use environment variable PORT on Heroku if available.

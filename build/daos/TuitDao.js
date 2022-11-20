@@ -73,6 +73,9 @@ class TuitDao {
         this.updateLikes = (tid, newStats) => __awaiter(this, void 0, void 0, function* () {
             return TuitModel_1.default.updateOne({ _id: tid }, { $set: { stats: newStats } });
         });
+        this.updateDislikes = (tid, newStats) => __awaiter(this, void 0, void 0, function* () {
+            return TuitModel_1.default.updateOne({ _id: tid }, { $set: { stats: newStats } });
+        });
     }
 }
 exports.default = TuitDao;
