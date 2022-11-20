@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: daos/MessageDao.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: daos/MessageDao.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __awaiter = (this &amp;&amp; this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const MessageModel_1 = __importDefault(require("../mongoose/MessageModel"));
+/**
+ * @class MessageDao Implements Data Access Object managing data storage
+ * of Messages
+ * @property {MessageDao} messageDao Private single instance of LikeDao
+ */
+class MessageDao {
+    constructor() {
+        /**
+         * Uses MessageDao to insert message instance into the database
+         * @param {string} uid2 User 1 primary key
+         * @param {string} uid2 User 2 primary key
+         * @returns Promise To be notified when message is inserted into the database
+         */
+        this.userMessagesUser = (uid1, uid2, message) => __awaiter(this, void 0, void 0, function* () { return MessageModel_1.default.create(Object.assign(Object.assign({}, message), { to: uid2, from: uid1 })); });
+        /**
+         * Removes a message instance from the database.
+         * @param {string} mid Message's primary key
+         * @returns Promise To be notified when message is removed from the database
+         */
+        this.userDeletesMessage = (mid) => __awaiter(this, void 0, void 0, function* () { return MessageModel_1.default.deleteOne({ _id: mid }); });
+        /**
+         * Uses MessageDao to retrieve all user documents from messages collection that are received by user
+         * @param {string} uid User's primary key
+         * @returns Promise To be notified when the messages are retrieved from
+         * database
+         */
+        this.findAllMessagesReceivedByUser = (uid) => __awaiter(this, void 0, void 0, function* () {
+            return MessageModel_1.default
+                .find({ to: uid })
+                .populate("message")
+                .exec();
+        });
+        /**
+         * Uses MessageDao to retrieve all user documents from messages collection that are sent by user
+         * @param {string} uid User's primary key
+         * @returns Promise To be notified when the messages are retrieved from
+         * database
+         */
+        this.findAllMessagesSentByUser = (uid) => __awaiter(this, void 0, void 0, function* () {
+            return MessageModel_1.default
+                .find({ from: uid })
+                .populate("message")
+                .exec();
+        });
+        /**
+         * Removes all message instances received by user from the database.
+         * @param {string} uid User's primary key
+         * @returns Promise To be notified when messages are removed from the database
+         */
+        this.userDeletesAllReceivedMessages = (uid) => __awaiter(this, void 0, void 0, function* () { return MessageModel_1.default.deleteMany({ to: uid }); });
+        /**
+         * Removes a message instances sent to user from the database.
+         * @param {string} mid User's primary key
+         * @returns Promise To be notified when messages are removed from the database
+         */
+        this.userDeletesAllSentMessages = (uid) => __awaiter(this, void 0, void 0, function* () { return MessageModel_1.default.deleteMany({ from: uid }); });
+    }
+}
+exports.default = MessageDao;
+MessageDao.messageDao = null;
+/**
+ * Creates singleton DAO instance
+ * @returns MessageDao
+ */
+MessageDao.getMessage = () => {
+    if (MessageDao.messageDao === null) {
+        MessageDao.messageDao = new MessageDao();
+    }
+    return MessageDao.messageDao;
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BookmarkController.html">BookmarkController</a></li><li><a href="BookmarkDao.html">BookmarkDao</a></li><li><a href="FollowController.html">FollowController</a></li><li><a href="FollowDao.html">FollowDao</a></li><li><a href="LikeController.html">LikeController</a></li><li><a href="LikeDao.html">LikeDao</a></li><li><a href="MessageController.html">MessageController</a></li><li><a href="MessageDao.html">MessageDao</a></li><li><a href="Tuit.html">Tuit</a></li><li><a href="TuitDao.html">TuitDao</a></li><li><a href="User.html">User</a></li><li><a href="UserDao.html">UserDao</a></li></ul><h3>Global</h3><ul><li><a href="global.html#PORT">PORT</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Oct 26 2022 13:15:07 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

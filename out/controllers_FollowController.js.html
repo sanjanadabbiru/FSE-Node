@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/FollowController.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/FollowController.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const FollowDao_1 = __importDefault(require("../daos/FollowDao"));
+/**
+ * @class FollowController implements the follows resource's RESTful Web service API.
+ * Defines the following HTTP endpoints:
+ *     &lt;li>POST /api/users/:uid1/follows/:uid2 user follows another user
+ *     &lt;/li>
+ *     &lt;li>DELETE /api/users/:uid1/follows/:uid2 user unfollows another user
+ *     &lt;/li>
+ *     &lt;li>GET /api/users/:uid/follows to get a list of other users a user is following
+ *     &lt;/li>
+ *     &lt;li>GET /api/users/:uid/followers to get a list of other users that are following them
+ *     no londer follows a user&lt;/li>
+ *    &lt;li>DELETE /api/users/:uid/followers user unfollows all followers
+ *     &lt;/li>
+ *   &lt;li>DELETE /api/users/:uid/follows user unfollows all users they are following
+ *     &lt;/li>
+
+ * @property {FollowDao} followDao Singleton DAO implementing follows CRUD operations
+ * @property {FollowController} FollowController Singleton controller implementing
+ * RESTful Web service API
+ */
+class FollowController {
+    constructor() {
+        /**
+         * searches the database for all users who have followed a certain user.
+         * @param {Request} req Represents request from client, including the path
+         * parameter uid representing the followed user
+         * @param {Response} res Represents response to client, including the
+         * body formatted as JSON arrays containing the user objects
+         */
+        this.findAllUsersThatFollowUser = (req, res) => FollowController.followDao.findAllUsersThatFollowUser(req.params.uid)
+            .then(follows => res.json(follows));
+        /**
+         * Retrieves from the database all users that a user is following.
+         * @param {Request} req Represents request from client, including the path
+         * parameter uid representing the user followed the users
+         * @param {Response} res Represents response to client, including the
+         * body formatted as JSON arrays containing the user objects that were followed
+         */
+        this.findAllUsersFollowedByUser = (req, res) => FollowController.followDao.findAllUsersFollowedByUser(req.params.uid)
+            .then(follows => res.json(follows));
+        /**
+         * @param {Request} req Contains the path parameters uid and uid, which stand for the user who
+         is following and unfollowing the other user, respectively. Represents client request.
+         * @param {Response} res Represents response to client, including the
+         * body formatted as JSON containing the new follows that was inserted in the
+         * database
+         */
+        this.userFollowsUser = (req, res) => FollowController.followDao.userFollowsUser(req.params.uid1, req.params.uid2)
+            .then(follows => res.json(follows));
+        /**
+         * @param {Request} req Contains the path parameters uid and uid, which stand for the user who
+         is unfollowing the user and the user who is being unfollowed, respectively.
+         * @param {Response} res Represents response to client, including status
+         * on whether deleting the follow was successful or not
+         */
+        this.userUnfollowsUser = (req, res) => FollowController.followDao.userUnfollowsUser(req.params.uid1, req.params.uid2)
+            .then(status => res.send(status));
+        /**
+         * @param {Request} req Represents request from client, including the
+         * path parameters uid representing the user that is losing
+         * all their followers
+         * @param {Response} res Represents response to client, including status
+         * on whether deleting the followers was successful or not
+         */
+        this.allFollowersUnfollowUser = (req, res) => FollowController.followDao.allFollowersUnfollowUser(req.params.uid)
+            .then(status => res.send(status));
+        /**
+         * @param {Request} req Represents request from client, including the
+         * path parameters uid representing the user that is unfollowing
+         * all users
+         * @param {Response} res Represents response to client, including status
+         * on whether unfollowing the users was successful or not
+         */
+        this.userUnfollowsAllUsers = (req, res) => FollowController.followDao.userUnfollowsAllUsers(req.params.uid)
+            .then(status => res.send(status));
+    }
+}
+exports.default = FollowController;
+FollowController.followController = null;
+FollowController.followDao = FollowDao_1.default.getFollow();
+/**
+ * Creates singleton controller instance
+ * @param {Express} app Express instance to declare the RESTful Web service
+ * API
+ * @return FollowController
+ */
+FollowController.getFollowController = (app) => {
+    if (FollowController.followController === null) {
+        FollowController.followController = new FollowController();
+        app.post("/api/users/:uid1/follows/:uid2", FollowController.followController.userFollowsUser);
+        app.delete("/api/users/:uid1/follows/:uid2", FollowController.followController.userUnfollowsUser);
+        app.get("/api/users/:uid/follows", FollowController.followController.findAllUsersFollowedByUser);
+        app.get("/api/users/:uid/followers", FollowController.followController.findAllUsersThatFollowUser);
+        app.delete("/api/users/:uid/followers", FollowController.followController.allFollowersUnfollowUser);
+        app.delete("/api/users/:uid/follows", FollowController.followController.userUnfollowsAllUsers);
+    }
+    return FollowController.followController;
+};
+;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BookmarkController.html">BookmarkController</a></li><li><a href="BookmarkDao.html">BookmarkDao</a></li><li><a href="FollowController.html">FollowController</a></li><li><a href="FollowDao.html">FollowDao</a></li><li><a href="LikeController.html">LikeController</a></li><li><a href="LikeDao.html">LikeDao</a></li><li><a href="MessageController.html">MessageController</a></li><li><a href="MessageDao.html">MessageDao</a></li><li><a href="Tuit.html">Tuit</a></li><li><a href="TuitDao.html">TuitDao</a></li><li><a href="User.html">User</a></li><li><a href="UserDao.html">UserDao</a></li></ul><h3>Global</h3><ul><li><a href="global.html#PORT">PORT</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Oct 26 2022 13:15:07 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

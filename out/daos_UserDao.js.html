@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: daos/UserDao.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: daos/UserDao.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __awaiter = (this &amp;&amp; this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const UserModel_1 = __importDefault(require("../mongoose/UserModel"));
+/**
+ * @class UserDao Implements Data Access Object managing data storage
+ * of Users
+ * @property {UserDao} userDao Private single instance of UserDao
+ */
+class UserDao {
+    constructor() {
+        /**
+         * Uses UserModel to retrieve all user documents from users collection
+         * @returns Promise To be notified when the users are retrieved from
+         * database
+         */
+        this.findAllUsers = () => __awaiter(this, void 0, void 0, function* () { return UserModel_1.default.find().exec(); });
+        /**
+         * Uses UserModel to retrieve single user document from users collection
+         * @param {string} uid User's primary key
+         * @returns Promise To be notified when user is retrieved from the database
+         */
+        this.findUserById = (uid) => __awaiter(this, void 0, void 0, function* () { return UserModel_1.default.findById(uid); });
+        /**
+         * Inserts user instance into the database
+         * @param {User} user Instance to be inserted into the database
+         * @returns Promise To be notified when user is inserted into the database
+         */
+        this.createUser = (user) => __awaiter(this, void 0, void 0, function* () { return UserModel_1.default.create(user); });
+        /**
+         * Removes user from the database.
+         * @param {string} uid Primary key of user to be removed
+         * @returns Promise To be notified when user is removed from the database
+         */
+        this.deleteUser = (uid) => __awaiter(this, void 0, void 0, function* () { return UserModel_1.default.deleteOne({ _id: uid }); });
+        /**
+         * Updates user with new values in database
+         * @param {string} uid Primary key of user to be modified
+         * @param {User} user User object containing properties and their new values
+         * @returns Promise To be notified when user is updated in the database
+         */
+        this.updateUser = (uid, user) => __awaiter(this, void 0, void 0, function* () {
+            return UserModel_1.default.updateOne({ _id: uid }, { $set: user });
+        });
+    }
+}
+exports.default = UserDao;
+UserDao.userDao = null;
+/**
+ * Creates singleton DAO instance
+ * @returns UserDao
+ */
+UserDao.getUser = () => {
+    if (UserDao.userDao === null) {
+        UserDao.userDao = new UserDao();
+    }
+    return UserDao.userDao;
+};
+;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BookmarkController.html">BookmarkController</a></li><li><a href="BookmarkDao.html">BookmarkDao</a></li><li><a href="FollowController.html">FollowController</a></li><li><a href="FollowDao.html">FollowDao</a></li><li><a href="LikeController.html">LikeController</a></li><li><a href="LikeDao.html">LikeDao</a></li><li><a href="MessageController.html">MessageController</a></li><li><a href="MessageDao.html">MessageDao</a></li><li><a href="Tuit.html">Tuit</a></li><li><a href="TuitDao.html">TuitDao</a></li><li><a href="User.html">User</a></li><li><a href="UserDao.html">UserDao</a></li></ul><h3>Global</h3><ul><li><a href="global.html#PORT">PORT</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Oct 26 2022 13:15:07 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+[
+  {
+    "location": {
+      "latitude": 0,
+      "longitude": 0
+    },
+    "_id": "63337ddbbe2d3685b9541299",
+    "username": "alice",
+    "password": "alice123",
+    "firstName": "Alice",
+    "lastName": "Wonderland",
+    "email": "alice@wonderland.com",
+    "accountType": "PERSONAL",
+    "maritalStatus": "SINGLE",
+    "joined": "2022-09-27T22:48:59.376Z",
+    "__v": 0
+  },
+  {
+    "location": {
+      "latitude": 0,
+      "longitude": 0
+    },
+    "_id": "63337e04be2d3685b954129b",
+    "username": "bob",
+    "password": "bob321",
+    "firstName": "Bob",
+    "lastName": "Hope",
+    "email": "bob@hope.com",
+    "accountType": "PERSONAL",
+    "maritalStatus": "SINGLE",
+    "joined": "2022-09-27T22:49:40.235Z",
+    "__v": 0
+  },
+  {
+    "location": {
+      "latitude": 0,
+      "longitude": 0
+    },
+    "_id": "63337e2bbe2d3685b954129d",
+    "username": "charlie",
+    "password": "charlie342",
+    "firstName": "Charlie",
+    "lastName": "Brown",
+    "email": "charlie@peanuts.com",
+    "accountType": "PERSONAL",
+    "maritalStatus": "SINGLE",
+    "joined": "2022-09-27T22:50:19.786Z",
+    "__v": 0
+  },
+  {
+    "location": {
+      "latitude": 0,
+      "longitude": 0
+    },
+    "_id": "63337e5bbe2d3685b954129f",
+    "username": "nasa",
+    "password": "nasa321",
+    "firstName": "NASA",
+    "lastName": "Gov",
+    "email": "space@nasa.gov",
+    "accountType": "PERSONAL",
+    "maritalStatus": "SINGLE",
+    "joined": "2022-09-27T22:51:07.406Z",
+    "__v": 0
+  },
+  {
+    "location": {
+      "latitude": 0,
+      "longitude": 0
+    },
+    "_id": "63337e7fbe2d3685b95412a1",
+    "username": "spacex",
+    "password": "spacex420",
+    "firstName": "SpaceX",
+    "lastName": " ",
+    "email": "elon@spacex.com",
+    "accountType": "PERSONAL",
+    "maritalStatus": "SINGLE",
+    "joined": "2022-09-27T22:51:43.170Z",
+    "__v": 0
+  }
+]
