@@ -169,5 +169,4 @@ export default class DislikeController implements DislikeControllerI {
             .then(dislikes => res.json(dislikes));
     }
 
-
 };
